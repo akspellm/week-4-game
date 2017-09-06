@@ -1,0 +1,41 @@
+body {
+	background: url('../images/space.jpg') no-repeat;
+	background-size: fill;
+	background-attachment: fixed;
+	color: white;
+}
+
+/*#player-section, #combatant-section, #enemy-section {
+	display:none;
+}*/
+
+.player-photo {
+	height: 100px;
+	max-width: 100px;
+}
+
+#player, .unselected, .enemies, #enemy {
+	padding: 1%;
+	display: block;
+	text-align: center;
+}
+
+.unselected:hover {
+	border: 4px solid green;
+}
+
+.enemies:hover {
+	border: 4px solid red;
+}
+
+#player, #enemy {
+	display: block;
+}
+
+#attack-button {
+	height: 40px;
+	margin-top: 6%;
+	margin-left: 2%;
+}
+
+
