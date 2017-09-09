@@ -12,7 +12,7 @@
 
 <body>
 
-	<div class="container" id="main">
+	<div class="container-fluid" id="main">
 	<section id="select-section">
 		<div class="row">
 			<div class="col-md-2">
@@ -48,8 +48,14 @@
 			<div class="col-md-2">
 			</div>
 			<div class="col-md-8">
-				<p id="selected-character"></p>
-				<button class="btn btn-primary" id="attack-button">Attack</button>
+				<div class="row">
+					<div class="col-md-6">
+						<p id="selected-character"></p>
+					</div>
+					<div class="col-md-6">
+						<button class="btn btn-primary" id="attack-button">ATTACK!!</button>
+					</div>
+				</div>
 			</div>
 			<div class="col-md-2">
 			</div>
@@ -97,6 +103,13 @@
 			</div>
 		</div>
 	</section>
+	</div>
+
+	<div class="container-fluid" id="game-over">
+		<h4>Game Over! Do you want to play again?</h4>
+		<button class="btn btn-primary" id="reset-button">Meow</button>
+	</div>
+
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

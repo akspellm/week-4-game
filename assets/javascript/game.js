@@ -20,6 +20,7 @@ var pusheen = {
 
 // SET UP PLAYERS
 
+
 var setUp = function() {
 
 var celebCats = [lilbub, grumpycat, pusheen];
@@ -57,104 +58,142 @@ var reSet = function() {
 	$("#selected-character").empty();
 	$("#combat-character").empty();
 	$("#enemy-characters").empty();
-	setUp();
 
-}
+};
+
+
+	
+
+
+function game(){
 
 setUp();
 
-// $(document).ready
+var gameOn = true;
+var playerSelected =false;
+var enemySelected= false;
 
-var game = function () {$(".unselected").on("click",function() {
-	// move selected character to "Your Character" slot
-	var selected = $(this);
-	var selectedHealth = selected.attr("data-attr");
-	var selectedHP = selected.attr("data-attr"); 
-	$("#selected-character").append(selected);
-	selected.removeAttr("class").attr("id", "selected");
-	var selectedStatus = $("<p>");
-	selected.append(selectedStatus);
+var selected;
+var selectedHealth;
+var selectedHP;
+var selectedStatus;
+var enemyArray = [];
+var enemy;
+var enemyHealth;
+var enemyHP;
+var enemyStatus;
 
-
-	$(".unselected").each(function() {
-		$("#enemy-characters").append($(this));
-	$(".unselected").removeAttr("class").attr("class", "enemies");
-});	
-	enemyArray = [];
-	$(".enemies").each(function(){
-		enemyArray.push($(this));
-	});
-
-	// move selected enemy character to combatant slot
-	var enemy = "";
-	var enemyHealth="";
-	var enemyStatus="";
-	var enemyHP="";
-
-	var chooseEnemy = function(){
-	$(".enemies").on("click", function() {
-		enemy = $(this);
-		enemyHealth = enemy.attr("data-attr");
-		enemyHP = enemy.attr("data-attr");
-		$("#combat-character").append(enemy);
-		enemy.removeAttr("class").attr("id", "enemy");
-		enemyStatus = $("<p>");
-		enemy.append(enemyStatus);
-	});
-};
-	chooseEnemy();
-	
-
-	
-	$("#attack-button").on("click", function(){
-		for (i=0; i < 1; i++) {
-		enemyHealth = enemyHealth - selectedHP;
-		enemyStatus.html("Hit! Enemy Health is now: "+ enemyHealth);
-		console.log("enemy Health "+ enemyHealth);
-		console.log("enemy HP "+ enemyHP);
-
-		selectedHealth = selectedHealth - enemyHP;
-		selectedHP = selectedHP * 2;
-		selectedStatus.html("You were hit! Your health is now: " + selectedHealth);
-
-		console.log("selected Health "+ selectedHealth);
-		console.log("selected HP "+ selectedHP);
-
-	};
-	
 		
-		if(selectedHealth < 0) {
-			alert("You Lose! Better luck next time");
-			reSet();
-			game();
-		}
-		else if(enemyHealth < 1) {
 
-			if (enemyArray.length > 0) {
-				$("#combat-character").empty();
-				alert("You win! Choose another enemy!");
-				chooseEnemy();
-				}
+$(".unselected").on("click", function() {
+    // move selected character to "Your Character" slot
+    if (playerSelected === false) {
+        selected = $(this);
+        selectedHealth = selected.attr("data-attr");
+        selectedHP = selected.attr("data-attr");
+        $("#selected-character").append(selected);
+        selected.removeAttr("class").attr("id", "selected");
+        selectedStatus = $("<p>");
+        selected.append(selectedStatus);
 
-			else {
-				alert("You win!");
-				game();
-			}
-		}
+        $(".unselected").each(function() {
+            $("#enemy-characters").append($(this));
+            $(".unselected").removeAttr("class").attr("class", "enemies");
+        });
 
-		else {
-			console.log("do nothing");
-		}
-							
+
+        $(".enemies").each(function() {
+            enemyArray.push($(this));
+        });
+
+        playerSelected = true;
+
+        console.log("selected Health " + selectedHealth);
+        console.log("selected HP " + selectedHP);
+    };
+
+
+    // move selected enemy character to combatant slot
+
+    $(".enemies").on("click", function() {
+        if (enemySelected === false) {
+            enemy = $(this)
+            enemyHealth = enemy.attr("data-attr");
+            enemyHP = enemy.attr("data-attr");
+            $("#combat-character").append(enemy);
+            enemy.removeAttr("class").attr("id", "enemy");
+            enemyStatus = $("<p>");
+            enemy.append(enemyStatus);
+            enemySelected = true;
+            console.log("enemy Health " + enemyHealth);
+            console.log("enemy HP " + enemyHP);
+        };
+    });
+})
+
+
+	
+
+$("#attack-button").on("click", function() {
+
+        enemyHealth = enemyHealth - selectedHP;
+        enemyStatus.html("Hit! Enemy Health is now: " + enemyHealth);
+        selectedHP = selectedHP * 2;
+        console.log("initating attack. Enemy health is: " + enemyHealth);
+
+        if (enemyHealth < 1 && enemyArray.length > 1) {
+            enemyArray.pop();
+            console.log(enemyArray.length)
+
+            $("#combat-character").empty();
+            alert("You win! Choose another enemy!");
+            enemySelected = false;
+        } else if (enemyHealth < 1) {
+            $("#combat-character").empty();
+            gameOn = false;
+            alert("You win!");
+
+        } else if (gameOn == true) {
+
+            selectedHealth = selectedHealth - enemyHP;
+            selectedStatus.html("Hit! Enemy Health is now: " + selectedHealth);
+            console.log("initating counter-attack. Selected health is: " + selectedHealth);
+
+            if (selectedHealth < 1) {
+                alert("You Lose!");
+                gameOn = false;
+            };
+        };
+    if (gameOn == false) {
+    	$("#game-over").toggle();
+    };
+
 
 });
 
+console.log(gameOn)
 
-});
+	
+
+	
+	
 
 };
+
+
 
 game();
+
+$("#reset-button").on("click", function() {
+	$("#game-over").toggle();
+	reSet();
+	game();
+});
+
+
+	
+							
+
 
 
 
