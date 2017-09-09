@@ -1,3 +1,7 @@
+$("#play").on("click", function(){
+	location.href="game.html"
+})
+
 // CAT STATS
 
 var lilbub = {
@@ -9,7 +13,7 @@ var lilbub = {
 var grumpycat = {
 	"Name": "Grumpy Cat",
 	"picture": "assets/images/grumpycat.png",
-	"HP": 500,
+	"HP": 300,
 }
 
 var pusheen = {
@@ -18,12 +22,43 @@ var pusheen = {
 	"HP": 100,
 }
 
+var cheshire = {
+	Name: "Cheshire Cat",
+	"picture" : "assets/images/cheshire.png",
+	"HP" : 350,
+};
+
+var hk = {
+	"Name": "Hello Kitty",
+	"picture": "assets/images/hk.png",
+	"HP": 50,
+}
+
+
+var maru = {
+	"Name": "Maru",
+	"picture": "assets/images/maru.png",
+	"HP": 250,
+}
+
+var luna = {
+	"Name": "Luna and Artemis",
+	"picture": "assets/images/luna.png",
+	"HP": 350,
+}
+var venus = {
+	"Name": "Venus",
+	"picture": "assets/images/venus.png",
+	"HP": 200,
+}
+
+
 // SET UP PLAYERS
 
 
 var setUp = function() {
 
-var celebCats = [lilbub, grumpycat, pusheen];
+var celebCats = [lilbub, grumpycat, pusheen, cheshire, hk, maru, luna];
 
 $.each(celebCats, function(index){
 	// new div for each player
@@ -49,28 +84,8 @@ $.each(celebCats, function(index){
 	hitPoints.html("HP: " + player.attr("data-attr"));
 	player.append(hitPoints);
 
-	// var catStatus = $("<p class='status'>");
-	// player.append(catStatus);	
 })
 };
-
-var reSet = function() {
-	$("#selected-character").empty();
-	$("#combat-character").empty();
-	$("#enemy-characters").empty();
-	$("#player-section").toggle();
-	$("#enemy-section").toggle();
-	$("#combatant-section").toggle();
-	$("#enemy-direction").toggle();	
-	$("#select-direction").toggle();
-	$("#vs").toggle();
-	$("#enemy-sign").toggle();
-	$("#attack-pen").toggle();
-};
-
-
-	
-
 
 function game(){
 
@@ -103,8 +118,9 @@ $(".unselected").on("click", function() {
         selectedStatus = $("<p>");
         selected.append(selectedStatus);
         $("#player-section").toggle();
-        $("#vs").toggle();
         $("#select-direction").toggle();
+
+        $("#vs").toggle();
 
         $(".unselected").each(function() {
             $("#enemy-characters").append($(this));
@@ -155,60 +171,55 @@ $(".unselected").on("click", function() {
 	
 
 $("#attack-button").on("click", function() {
+	if (gameOn == true) {
 
         enemyHealth = enemyHealth - selectedHP;
-        enemyStatus.html("Hit! Enemy Health is now: " + enemyHealth);
+        enemyStatus.html("Hit! Enemy's Health is now: " + enemyHealth);
         selectedHP = selectedHP * 2;
         console.log("initating attack. Enemy health is: " + enemyHealth);
 
-        if (enemyHealth < 1 && enemyArray.length > 1) {
+        selectedHealth = selectedHealth - enemyHP;
+        selectedStatus.html("Hit! Your Health is now: " + selectedHealth);
+        console.log("initating counter-attack. Selected health is: " + selectedHealth);
+
+        if (selectedHealth < 1) {
+        		$("#game-message").html("Game Over! Do you want to play again?")
+                gameOn = false;
+            }
+
+        else if (enemyHealth < 1 && enemyArray.length > 1) {
             enemyArray.pop();
             console.log(enemyArray.length)
 
             $("#combat-character").empty();
-            alert("You win! Choose another enemy!");
+            $("#combatant-section").toggle();
+            $("#vanquished").toggle().delay(600).fadeOut("slow");
+            $("#enemy-direction").toggle();
+        	$("#enemy-sign").toggle();
+			$("#attack-pen").toggle();
             enemySelected = false;
-        } else if (enemyHealth < 1) {
+        } 
+
+        else if (enemyHealth < 1) {
             $("#combat-character").empty();
             gameOn = false;
             alert("You win!");
-
-        } else if (gameOn == true) {
-
-            selectedHealth = selectedHealth - enemyHP;
-            selectedStatus.html("Hit! Enemy Health is now: " + selectedHealth);
-            console.log("initating counter-attack. Selected health is: " + selectedHealth);
-
-            if (selectedHealth < 1) {
-                alert("You Lose!");
-                gameOn = false;
-            };
-        };
+        } 
+    };
     if (gameOn == false) {
     	$("#game-over").toggle();
-    };
+    	$("#reset-button").on("click", function() {
+    		location.reload();
 
+    });
 
-});
-
-console.log(gameOn)
-
-	
-
-	
-	
 
 };
-
-
+});
+};
 
 game();
 
-$("#reset-button").on("click", function() {
-	$("#game-over").toggle();
-	reSet();
-	game();
-});
 
 
 	
