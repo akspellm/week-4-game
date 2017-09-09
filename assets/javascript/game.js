@@ -58,7 +58,14 @@ var reSet = function() {
 	$("#selected-character").empty();
 	$("#combat-character").empty();
 	$("#enemy-characters").empty();
-
+	$("#player-section").toggle();
+	$("#enemy-section").toggle();
+	$("#combatant-section").toggle();
+	$("#enemy-direction").toggle();	
+	$("#select-direction").toggle();
+	$("#vs").toggle();
+	$("#enemy-sign").toggle();
+	$("#attack-pen").toggle();
 };
 
 
@@ -95,11 +102,16 @@ $(".unselected").on("click", function() {
         selected.removeAttr("class").attr("id", "selected");
         selectedStatus = $("<p>");
         selected.append(selectedStatus);
+        $("#player-section").toggle();
+        $("#vs").toggle();
+        $("#select-direction").toggle();
 
         $(".unselected").each(function() {
             $("#enemy-characters").append($(this));
             $(".unselected").removeAttr("class").attr("class", "enemies");
         });
+        $("#enemy-section").toggle();
+        $("#enemy-direction").toggle();
 
 
         $(".enemies").each(function() {
@@ -127,6 +139,14 @@ $(".unselected").on("click", function() {
             enemySelected = true;
             console.log("enemy Health " + enemyHealth);
             console.log("enemy HP " + enemyHP);
+            $(".unselected").each(function() {
+            $("#enemy-characters").append($(this));
+            $(".unselected").removeAttr("class").attr("class", "enemies");
+        });
+        $("#combatant-section").toggle();
+        $("#enemy-direction").toggle();
+        $("#enemy-sign").toggle();
+        $("#attack-pen").toggle();
         };
     });
 })

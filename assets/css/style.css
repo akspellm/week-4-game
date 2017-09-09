@@ -6,17 +6,19 @@
 	position: absolute;
 	z-index: 1;
 	width: 100%;
-
+	height: 100%;
+/*	margin-left: 10%;*/
 }
 
 body section {
-	margin: 2.5%;
+	margin: 0 2.5%;
 	background-color: rgba(0,0,0,0.5);
+	margin-left: 10%;
 }
 
-/*#player-section, #combatant-section, #enemy-section {
+#player-section, #combatant-section, #enemy-section, #enemy-direction, #vs, #enemy-sign, #attack-pen {
 	display:none;
-}*/
+}
 
 .player-photo {
 	height: 100px;
@@ -24,9 +26,17 @@ body section {
 }
 
 #selected, .unselected, .enemies, #enemy {
-	padding: 1%;
+/*	padding: 1%;*/
+	display: inline-block;
+	text-align: center;
+	margin: 2%;
+}
+
+#selected, #enemy {
+/*	padding: 1%;*/
 	display: block;
 	text-align: center;
+	margin: 2%;
 }
 
 .unselected:hover {
@@ -37,15 +47,17 @@ body section {
 	border: 4px solid red;
 }
 
-#player, #enemy {
+/*#player, #enemy {
 	display: block;
-}
+}*/
 
 #attack-button {
 	height: 60px;
-	width: 100px;
-	margin: 15%;
-	font-size: 19px;
+	width: 200px;
+	margin: 0px auto;
+	display: block;	
+	font-size: 25px;
+	margin-top: -8%;
 }
 
 #game-over {
@@ -68,6 +80,10 @@ body section {
 	margin: 0px auto;
 	display: block;
 }
+
+#attack-pen {
+	margin-left: -5%;
+
 
 
 
