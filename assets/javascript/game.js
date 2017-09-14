@@ -105,6 +105,8 @@ var enemyHealth;
 var enemyHP;
 var enemyStatus;
 
+var attackSound = new Audio();
+
 		
 
 $(".unselected").on("click", function() {
@@ -117,7 +119,7 @@ $(".unselected").on("click", function() {
         selected.removeAttr("class").attr("id", "selected");
         selectedStatus = $("<p>");
         selected.append(selectedStatus);
-        $("#player-section").toggle();
+        $("#battle-section").toggle();
         $("#select-direction").toggle();
 
         $("#vs").toggle();
@@ -172,6 +174,9 @@ $(".unselected").on("click", function() {
 
 $("#attack-button").on("click", function() {
 	if (gameOn == true) {
+    
+        attackSound.src = "attack.wav";
+        attackSound.play();
 
         enemyHealth = enemyHealth - selectedHP;
         enemyStatus.html("Hit! Enemy's Health is now: " + enemyHealth);
@@ -203,7 +208,7 @@ $("#attack-button").on("click", function() {
         else if (enemyHealth < 1) {
             $("#combat-character").empty();
             gameOn = false;
-            alert("You win!");
+            $("#game-message").html("You win! Do you want to play again?");
         } 
     };
     if (gameOn == false) {
